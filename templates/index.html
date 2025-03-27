@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TA Arbitrage Ninjutsu</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        form { margin-bottom: 20px; }
+        .batch { 
+            margin-bottom: 20px; 
+            padding: 10px; 
+            border: 1px solid #ddd; 
+            background: #f9f9f9; 
+            max-width: 600px; 
+            margin: 0 auto; 
+            word-wrap: break-word; 
+            overflow-wrap: break-word;
+            text-align: left;
+        }
+        .copy-btn { 
+            margin-top: 5px; 
+            cursor: pointer; 
+            padding: 5px 10px; 
+            background: #007bff; 
+            color: white; 
+            border: none; 
+            border-radius: 5px;
+        }
+        .copy-btn:hover { background: #0056b3; }
+        .batch-content {
+            padding: 10px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        .clear-btn {
+            margin: 20px auto;
+            padding: 8px 16px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+        }
+        .clear-btn:hover {
+            background-color: #c82333;
+        }
+        .message-box {
+            padding: 15px;
+            margin: 20px auto;
+            max-width: 600px;
+            border-radius: 5px;
+            border: 1px solid transparent;
+        }
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+        .form-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        .form-box {
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+            background: #f8f9fa;
+            min-width: 300px;
+        }
+        .section-title {
+            margin: 30px 0 15px;
+            color: #2c3e50;
+        }
+        .download-btn {
+            margin: 10px auto;
+            padding: 8px 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-block;
+        }
+        .download-btn:hover {
+            background-color: #218838;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        /* New styles for skip report */
+        .skip-report {
+            text-align: left;
+            margin: 15px auto;
+            max-width: 600px;
+            padding: 15px;
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            border-radius: 4px;
+        }
+        .skip-report h4 {
+            margin-top: 0;
+            color: #856404;
+        }
+        .skip-report ul {
+            margin-bottom: 0;
+            padding-left: 20px;
+        }
+        .skip-report li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>TA Arbitrage Ninjutsu 🥷</h1>
+    <h5>Stealthy, precise profit strikes</h5>
+    
+    <div class="form-container">
+        <div class="form-box">
+            <h2>Process Sellers (for Keepa)</h2>
+            <form action="/" method="POST" enctype="multipart/form-data">
+                <input type="file" name="file" multiple required>
+                <button type="submit">Process File(s)</button>
+            </form>
+        </div>
+        
+        <div class="form-box">
+            <h2>Import ASINs</h2>
+            <form action="/import_asin" method="POST" enctype="multipart/form-data">
+                <input type="file" name="file" required multiple accept=".csv">
+                <br><br>
+                <input type="checkbox" name="skip_brands" id="skip_brands">
+                <label for="skip_brands">Auto Skip Gated Brand listed in Google Sheet</label>
+                <br><br>
+                <button type="submit">Import ASIN from CSV</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ASIN Results Section -->
+    {% if show_asin_results %}
+        <div class="message-box success-message">
+            {{ asin_message.split('\n')[0] }}  <!-- Show only the first line (success message) -->
+        </div>
+        
+        <!-- Skip Report Section -->
+        {% if '\n' in asin_message %}  <!-- Check if there are details to show -->
+            <div class="skip-report">
+                <h4>Skip Details:</h4>
+                <ul>
+                    {% for line in asin_message.split('\n')[1:] %}
+                        {% if line.strip() %}
+                            <li>{{ line | replace('⏩', '↪️') | replace('🚫', '⛔') | safe }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        
+        <div class="button-group">
+            <form action="/download_asin_excel" method="POST">
+                <input type="hidden" name="asin_data" value="{{ asin_data }}">
+                <button type="submit" class="download-btn">Download ASINs as Excel</button>
+            </form>
+            <form action="/clear" method="POST">
+                <button type="submit" class="clear-btn">Clear Results</button>
+            </form>
+        </div>
+    {% endif %}
+
+    <!-- Seller Results Section -->
+    {% if batches and not show_asin_results %}
+        <h2 class="section-title">Processed Seller Batches:</h2>
+        {% for batch in batches %}
+            <div class="batch">
+                <h3>Batch {{ loop.index }}</h3>
+                <button class="copy-btn" onclick="copyToClipboard('batch{{ loop.index }}')">Copy</button>
+                <div class="batch-content" id="batch{{ loop.index }}">
+                    {{ batch | join(', ') }}
+                </div>
+            </div>
+        {% endfor %}
+        
+        <form action="/clear" method="POST">
+            <button type="submit" class="clear-btn">Clear Seller Results</button>
+        </form>
+    {% endif %}
+
+    <script>
+        function copyToClipboard(batchId) {
+            let batchText = document.getElementById(batchId).innerText;
+            navigator.clipboard.writeText(batchText).then(() => {
+                alert("Batch copied to clipboard!");
+            }).catch(err => {
+                alert("Failed to copy: " + err);
+            });
+        }
+    </script>
+</body>
+</html>

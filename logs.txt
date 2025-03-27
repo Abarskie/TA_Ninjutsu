@@ -1,0 +1,25 @@
+2025-03-28 01:19:38,543 - INFO - 127.0.0.1 - - [28/Mar/2025 01:19:38] "POST /import_asin HTTP/1.1" 200 -
+2025-03-28 01:24:39,815 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-03-28 01:24:39,816 - INFO - [33mPress CTRL+C to quit[0m
+2025-03-28 01:24:40,928 - INFO - 127.0.0.1 - - [28/Mar/2025 01:24:40] "GET / HTTP/1.1" 200 -
+2025-03-28 01:26:44,250 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-03-28 01:26:44,250 - INFO - [33mPress CTRL+C to quit[0m
+2025-03-28 01:26:45,363 - INFO - 127.0.0.1 - - [28/Mar/2025 01:26:45] "GET / HTTP/1.1" 200 -
+2025-03-28 01:26:51,133 - INFO - 127.0.0.1 - - [28/Mar/2025 01:26:51] "POST /import_asin HTTP/1.1" 200 -
+2025-03-28 01:50:00,932 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-03-28 01:50:00,932 - INFO - [33mPress CTRL+C to quit[0m
+2025-03-28 01:50:02,034 - INFO - 127.0.0.1 - - [28/Mar/2025 01:50:02] "GET / HTTP/1.1" 200 -
+2025-03-28 01:50:12,048 - INFO - 127.0.0.1 - - [28/Mar/2025 01:50:12] "POST /import_asin HTTP/1.1" 200 -
+2025-03-28 01:51:06,989 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-03-28 01:51:06,989 - INFO - [33mPress CTRL+C to quit[0m
+2025-03-28 01:51:08,113 - INFO - 127.0.0.1 - - [28/Mar/2025 01:51:08] "GET / HTTP/1.1" 200 -
+2025-03-28 01:51:17,308 - INFO - 127.0.0.1 - - [28/Mar/2025 01:51:17] "POST /import_asin HTTP/1.1" 200 -
+2025-03-28 02:57:52,326 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-03-28 02:57:52,326 - INFO - [33mPress CTRL+C to quit[0m
+2025-03-28 02:57:53,438 - INFO - 127.0.0.1 - - [28/Mar/2025 02:57:53] "GET / HTTP/1.1" 200 -
+2025-03-28 02:58:09,826 - INFO - 127.0.0.1 - - [28/Mar/2025 02:58:09] "POST /import_asin HTTP/1.1" 200 -
